@@ -15,8 +15,25 @@ public class Main {
 			
 			System.out.println(currentCamera.toString());
 			
-			Common.startCamera(currentCamera.toString());
-			System.out.println("Camera sent message to Topic successfully!");
+			//Common.startCamera(currentCamera.toString());
+			//System.out.println("Camera sent message to Topic successfully!");
+			System.out.println("Camera not sending message to Topic.");
+			
+			int trafficRate = Integer.parseInt(args[4]);
+			int ratePerSecond = 60000/trafficRate;
+			int carsPassed = 0;
+			
+			while(true) {
+				carsPassed++;
+				System.out.println(carsPassed);
+				
+	            try {
+					Thread.sleep(ratePerSecond);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

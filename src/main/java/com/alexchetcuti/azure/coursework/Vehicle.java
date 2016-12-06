@@ -2,6 +2,10 @@ package com.alexchetcuti.azure.coursework;
 
 public class Vehicle {
 	
+	public Vehicle() {
+		
+	}
+	
 	private VehicleType vehicle_type;
 	private String reg_plate;
 	private int velocity;
