@@ -13,6 +13,14 @@ public class Vehicle {
 		this.camera_u_id = camera_u_id;
 	}
 	
+	public String toString()
+	{
+		return "Vehicle Type: " + this.vehicle_type.toString() + " | " +
+				"Registration Plate: " + this.reg_plate + " | " +
+				"Velocity: " + this.velocity + " | " +
+				"Camera Unique ID: " + this.camera_u_id;
+	}
+	
 	private VehicleType vehicle_type;
 	private String reg_plate;
 	private int velocity;

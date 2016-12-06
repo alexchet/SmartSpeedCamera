@@ -135,6 +135,26 @@ public class Common {
 		}
 	}
 	
+	public static void carSighting(Vehicle vehicle)
+	{
+		ServiceBusContract service = serviceConnect();
+		
+		//Send Messages to a topic
+		// Create message, passing a string message for the body
+		BrokeredMessage message = new BrokeredMessage(vehicle.toString());
+		// Set some additional custom app-specific property
+		message.setProperty("velocity", vehicle.getVelocity());
+		message.setProperty("camera_u_id", vehicle.getCamera_u_id());
+			
+		// Send message to the topic
+		try {
+			service.sendTopicMessage("vehicles", message);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static String genRegPlate()
 	{
 		String possChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -154,7 +174,7 @@ public class Common {
 
         for (int i=0; i<3; i++) {
         	int randInt = rand.nextInt(25);
-        	builder.append(possNumbs.charAt(randInt));
+        	builder.append(possChars.charAt(randInt));
         }
         
         return builder.toString();

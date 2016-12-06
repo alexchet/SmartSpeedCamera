@@ -31,8 +31,8 @@ public class Main {
 				
 				int current_velocity = rand.nextInt(max_velocity - min_velocity) + min_velocity;
 				
-				Vehicle v = new Vehicle(VehicleType.CAR, Common.genRegPlate(), current_velocity, currentCamera.getU_id());
-				
+				Vehicle v = new Vehicle(VehicleType.VALUES.get(rand.nextInt(VehicleType.SIZE)), Common.genRegPlate(), current_velocity, currentCamera.getU_id());
+				Common.carSighting(v);
 				System.out.println(v.toString());
 				
 	            try {
