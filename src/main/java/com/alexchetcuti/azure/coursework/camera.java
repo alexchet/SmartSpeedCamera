@@ -2,13 +2,13 @@ package com.alexchetcuti.azure.coursework;
 
 import java.util.Date;
 
-public class camera {
+public class Camera {
 
-	public camera() {
+	public Camera() {
 		
 	}
 	
-	public camera(int u_id, String street_name, String town, int speed_limit, String start_time) {
+	public Camera(int u_id, String street_name, String town, int speed_limit, String start_time) {
 		this.u_id = u_id;
 		this.street_name = street_name;
 		this.town = town;

@@ -1,11 +1,11 @@
 package com.alexchetcuti.azure.coursework;
 import java.util.Date;
 
-public class main {
+public class Main {
 
 	public static void main(String[] args){
 		if (args.length > 0) {
-			camera currentCamera = new camera();
+			Camera currentCamera = new Camera();
 			currentCamera.setU_id(Integer.parseInt(args[0]));
 			currentCamera.setStreet_name(args[1]);
 			currentCamera.setTown(args[2]);
@@ -15,7 +15,7 @@ public class main {
 			
 			System.out.println(currentCamera.toString());
 			
-			common.startCamera(currentCamera.toString());
+			Common.startCamera(currentCamera.toString());
 			System.out.println("Camera sent message to Topic successfully!");
 		}
 	}

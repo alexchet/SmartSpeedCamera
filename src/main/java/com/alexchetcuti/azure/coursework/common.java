@@ -12,7 +12,7 @@ import com.microsoft.windowsazure.services.servicebus.models.RuleInfo;
 import com.microsoft.windowsazure.services.servicebus.models.SubscriptionInfo;
 import com.microsoft.windowsazure.services.servicebus.models.TopicInfo;
 
-public class common {
+public class Common {
 	
 	public static ServiceBusContract serviceConnect()
 	{
