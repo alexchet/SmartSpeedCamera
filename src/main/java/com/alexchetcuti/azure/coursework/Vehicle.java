@@ -6,6 +6,13 @@ public class Vehicle {
 		
 	}
 	
+	public Vehicle(VehicleType vehicle_type, String reg_plate, int velocity, int camera_u_id) {
+		this.vehicle_type = vehicle_type;
+		this.reg_plate = reg_plate;
+		this.velocity = velocity;
+		this.camera_u_id = camera_u_id;
+	}
+	
 	private VehicleType vehicle_type;
 	private String reg_plate;
 	private int velocity;

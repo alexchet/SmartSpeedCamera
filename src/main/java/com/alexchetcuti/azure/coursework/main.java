@@ -1,5 +1,6 @@
 package com.alexchetcuti.azure.coursework;
 import java.util.Date;
+import java.util.Random;
 
 public class Main {
 
@@ -21,11 +22,18 @@ public class Main {
 			
 			int trafficRate = Integer.parseInt(args[4]);
 			int ratePerSecond = 60000/trafficRate;
-			int carsPassed = 0;
+			
+			Random rand = new Random();
 			
 			while(true) {
-				carsPassed++;
-				System.out.println(carsPassed);
+				int min_velocity = currentCamera.getSpeed_limit() / 2;
+				int max_velocity = currentCamera.getSpeed_limit() * 2;
+				
+				int current_velocity = rand.nextInt(max_velocity - min_velocity) + min_velocity;
+				
+				Vehicle v = new Vehicle(VehicleType.CAR, Common.genRegPlate(), current_velocity, currentCamera.getU_id());
+				
+				System.out.println(v.toString());
 				
 	            try {
 					Thread.sleep(ratePerSecond);
