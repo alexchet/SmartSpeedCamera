@@ -122,4 +122,50 @@ public class Common {
         
         return builder.toString();
 	}
+	
+	public static void createSmartCamerasTable()
+	{
+		try
+		{
+		    // Retrieve storage account from connection-string.
+		    CloudStorageAccount storageAccount =
+		        CloudStorageAccount.parse(SSCConnectionString);
+
+		    // Create the table client.
+		    CloudTableClient tableClient = storageAccount.createCloudTableClient();
+
+		    // Create the table if it doesn't exist.
+		    String tableName = "SpeedCameras";
+		    CloudTable cloudTable = tableClient.getTableReference(tableName);
+		    cloudTable.createIfNotExists();
+		}
+		catch (Exception e)
+		{
+		    // Output the stack trace.
+		    e.printStackTrace();
+		}
+	}
+	
+	public static void createVehiclesTable()
+	{
+		try
+		{
+		    // Retrieve storage account from connection-string.
+		    CloudStorageAccount storageAccount =
+		        CloudStorageAccount.parse(SSCConnectionString);
+
+		    // Create the table client.
+		    CloudTableClient tableClient = storageAccount.createCloudTableClient();
+
+		    // Create the table if it doesn't exist.
+		    String tableName = "Vehicles";
+		    CloudTable cloudTable = tableClient.getTableReference(tableName);
+		    cloudTable.createIfNotExists();
+		}
+		catch (Exception e)
+		{
+		    // Output the stack trace.
+		    e.printStackTrace();
+		}
+	}
 }

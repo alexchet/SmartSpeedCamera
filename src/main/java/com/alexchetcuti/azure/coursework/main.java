@@ -5,7 +5,7 @@ import java.util.Random;
 public class Main {
 
 	public static void main(String[] args){
-		if (args.length > 0) {
+		/*if (args.length > 0) {
 			Camera currentCamera = new Camera();
 			currentCamera.setUniqueID(Integer.parseInt(args[0]));
 			currentCamera.setStreetName(args[1]);
@@ -42,6 +42,9 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
+		
+		Common.createSmartCamerasTable();
+		Common.createVehiclesTable();
 	}
 }
