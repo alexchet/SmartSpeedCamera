@@ -87,7 +87,7 @@ public class Common {
 		BrokeredMessage message = new BrokeredMessage(vehicle.toString());
 		// Set some additional custom app-specific property
 		message.setProperty("velocity", vehicle.getVelocity());
-		message.setProperty("camera_u_id", vehicle.getCamera_u_id());
+		message.setProperty("cameraUniqueID", vehicle.getCameraUniqueID());
 			
 		// Send message to the topic
 		try {

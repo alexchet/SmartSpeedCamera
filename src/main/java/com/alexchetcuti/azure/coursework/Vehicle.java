@@ -6,71 +6,80 @@ public class Vehicle {
 		
 	}
 	
-	public Vehicle(VehicleType vehicle_type, String reg_plate, int velocity, int camera_u_id) {
-		this.vehicle_type = vehicle_type;
-		this.reg_plate = reg_plate;
-		this.velocity = velocity;
-		this.camera_u_id = camera_u_id;
+	public Vehicle(VehicleType vehicleType, String regPlate, int velocity, int cameraUniqueID) {
+		this.setVehicleType(vehicleType);
+		this.setRegPlate(regPlate);
+		this.setVelocity(velocity);
+		this.setCameraUniqueID(cameraUniqueID);
 	}
 	
 	public String toString()
 	{
-		return "Vehicle Type: " + this.vehicle_type.toString() + " | " +
-				"Registration Plate: " + this.reg_plate + " | " +
-				"Velocity: " + this.velocity + " | " +
-				"Camera Unique ID: " + this.camera_u_id;
+		return "Vehicle Type: " + this.getVehicleType().toString() + " | " +
+				"Registration Plate: " + this.getRegPlate() + " | " +
+				"Velocity: " + this.getVelocity() + " | " +
+				"Camera Unique ID: " + this.getCameraUniqueID();
 	}
 	
-	private VehicleType vehicle_type;
-	private String reg_plate;
+	private VehicleType vehicleType;
+	private String regPlate;
 	private int velocity;
-	private int camera_u_id;
+	private int cameraUniqueID;
+	
 	/**
-	 * @return the vehicle_type
+	 * @return the vehicleType
 	 */
-	public VehicleType getVehicle_type() {
-		return vehicle_type;
+	public VehicleType getVehicleType() {
+		return vehicleType;
 	}
+
 	/**
-	 * @param vehicle_type the vehicle_type to set
+	 * @param vehicleType the vehicleType to set
 	 */
-	public void setVehicle_type(VehicleType vehicle_type) {
-		this.vehicle_type = vehicle_type;
+	public void setVehicleType(VehicleType vehicleType) {
+		this.vehicleType = vehicleType;
 	}
+
 	/**
-	 * @return the reg_plate
+	 * @return the regPlate
 	 */
-	public String getReg_plate() {
-		return reg_plate;
+	public String getRegPlate() {
+		return regPlate;
 	}
+
 	/**
-	 * @param reg_plate the reg_plate to set
+	 * @param regPlate the regPlate to set
 	 */
-	public void setReg_plate(String reg_plate) {
-		this.reg_plate = reg_plate;
+	public void setRegPlate(String regPlate) {
+		this.regPlate = regPlate;
 	}
+
 	/**
 	 * @return the velocity
 	 */
 	public int getVelocity() {
 		return velocity;
 	}
+
 	/**
 	 * @param velocity the velocity to set
 	 */
 	public void setVelocity(int velocity) {
 		this.velocity = velocity;
 	}
+
 	/**
-	 * @return the camera_u_id
+	 * @return the cameraUniqueID
 	 */
-	public int getCamera_u_id() {
-		return camera_u_id;
+	public int getCameraUniqueID() {
+		return cameraUniqueID;
 	}
+
 	/**
-	 * @param camera_u_id the camera_u_id to set
+	 * @param cameraUniqueID the cameraUniqueID to set
 	 */
-	public void setCamera_u_id(int camera_u_id) {
-		this.camera_u_id = camera_u_id;
-	} 
+	public void setCameraUniqueID(int cameraUniqueID) {
+		this.cameraUniqueID = cameraUniqueID;
+	}
+
 }
