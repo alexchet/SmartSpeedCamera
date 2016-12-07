@@ -1,7 +1,5 @@
 package com.alexchetcuti.azure.coursework;
 
-import java.util.Date;
-
 public class Camera {
 
 	public Camera() {
