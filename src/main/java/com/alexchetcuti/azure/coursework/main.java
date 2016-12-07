@@ -45,5 +45,6 @@ public class Main {
 		}*/
 		
 		Common.createTable();
+		Common.listTables();
 	}
 }

@@ -145,4 +145,29 @@ public class Common {
 		    e.printStackTrace();
 		}
 	}
+	
+	public static void listTables()
+	{
+		try
+		{
+		    // Retrieve storage account from connection-string.
+		    CloudStorageAccount storageAccount =
+		        CloudStorageAccount.parse(SSCConnectionString);
+
+		    // Create the table client.
+		    CloudTableClient tableClient = storageAccount.createCloudTableClient();
+
+		    // Loop through the collection of table names.
+		    for (String table : tableClient.listTables())
+		    {
+		        // Output each table name.
+		        System.out.println(table);
+		    }
+		}
+		catch (Exception e)
+		{
+		    // Output the stack trace.
+		    e.printStackTrace();
+		}
+	}
 }
