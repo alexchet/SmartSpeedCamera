@@ -6,87 +6,96 @@ public class Camera {
 		
 	}
 	
-	public Camera(int u_id, String street_name, String town, int speed_limit, String start_time) {
-		this.u_id = u_id;
-		this.street_name = street_name;
+	public Camera(int uniqueID, String streetName, String town, int speedLimit, String startTime) {
+		this.uniqueID = uniqueID;
+		this.streetName = streetName;
 		this.town = town;
-		this.speed_limit = speed_limit;
-		this.start_time = start_time;
+		this.speedLimit = speedLimit;
+		this.startTime = startTime;
 	}
 	
 	public String toString()
 	{
-		return "Unique ID: " + this.u_id + " | " +
-				"Street Name: " + this.street_name + " | " +
+		return "Unique ID: " + this.uniqueID + " | " +
+				"Street Name: " + this.streetName + " | " +
 				"Town: " + this.town + " | " +
-				"Speed Limit: " + this.speed_limit + " | " +
-				"Start Time: " + this.start_time;
+				"Speed Limit: " + this.speedLimit + " | " +
+				"Start Time: " + this.startTime;
 	}
-	
-	private int u_id = 0;
-	private String street_name = "";
+
+	private int uniqueID = 0;
+	private String streetName = "";
 	private String town = "";
-	private int speed_limit = 0;
-	private String start_time = null;
+	private int speedLimit = 0;
+	private String startTime = null;
 	
 	/**
-	 * @return the u_id
+	 * @return the uniqueID
 	 */
-	public int getU_id() {
-		return u_id;
+	public int getUniqueID() {
+		return uniqueID;
 	}
+
 	/**
-	 * @param u_id the u_id to set
+	 * @param uniqueID the uniqueID to set
 	 */
-	public void setU_id(int u_id) {
-		this.u_id = u_id;
+	public void setUniqueID(int uniqueID) {
+		this.uniqueID = uniqueID;
 	}
+
 	/**
-	 * @return the street_name
+	 * @return the streetName
 	 */
-	public String getStreet_name() {
-		return street_name;
+	public String getStreetName() {
+		return streetName;
 	}
+
 	/**
-	 * @param street_name the street_name to set
+	 * @param streetName the streetName to set
 	 */
-	public void setStreet_name(String street_name) {
-		this.street_name = street_name;
+	public void setStreetName(String streetName) {
+		this.streetName = streetName;
 	}
+
 	/**
 	 * @return the town
 	 */
 	public String getTown() {
 		return town;
 	}
+
 	/**
 	 * @param town the town to set
 	 */
 	public void setTown(String town) {
 		this.town = town;
 	}
+
 	/**
-	 * @return the speed_limit
+	 * @return the speedLimit
 	 */
-	public int getSpeed_limit() {
-		return speed_limit;
+	public int getSpeedLimit() {
+		return speedLimit;
 	}
+
 	/**
-	 * @param speed_limit the speed_limit to set
+	 * @param speedLimit the speedLimit to set
 	 */
-	public void setSpeed_limit(int speed_limit) {
-		this.speed_limit = speed_limit;
+	public void setSpeedLimit(int speedLimit) {
+		this.speedLimit = speedLimit;
 	}
+
 	/**
-	 * @return the start_time
+	 * @return the startTime
 	 */
-	public String getStart_time() {
-		return start_time;
+	public String getStartTime() {
+		return startTime;
 	}
+
 	/**
-	 * @param start_time the start_time to set
+	 * @param statTime the statTime to set
 	 */
-	public void setStart_time(String start_time) {
-		this.start_time = start_time;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 }
