@@ -7,25 +7,8 @@ import com.microsoft.windowsazure.services.servicebus.ServiceBusConfiguration;
 import com.microsoft.windowsazure.services.servicebus.ServiceBusContract;
 import com.microsoft.windowsazure.services.servicebus.ServiceBusService;
 import com.microsoft.windowsazure.services.servicebus.models.BrokeredMessage;
-import com.microsoft.windowsazure.services.servicebus.models.CreateRuleResult;
-import com.microsoft.windowsazure.services.servicebus.models.CreateSubscriptionResult;
-import com.microsoft.windowsazure.services.servicebus.models.CreateTopicResult;
-import com.microsoft.windowsazure.services.servicebus.models.RuleInfo;
-import com.microsoft.windowsazure.services.servicebus.models.SubscriptionInfo;
-import com.microsoft.windowsazure.services.servicebus.models.TopicInfo;
-
-//Include the following imports to use table APIs
-import com.microsoft.azure.storage.*;
-import com.microsoft.azure.storage.table.*;
-import com.microsoft.azure.storage.table.TableQuery.*;
 
 public class Common {
-	
-	// Define the connection-string with your values.
-	public static final String SSCConnectionString =
-	    "DefaultEndpointsProtocol=http;" +
-	    "AccountName=sscdatastorage;" +
-	    "AccountKey=9OcI4KkZf6FyD/CSOLBQIzbjxiSIcjKVy0QtO6U1z0Ydb/juV4k49MTLWoRMWl124/GyfOwFMSDGN3htKTnq3Q==";
 	
 	public static ServiceBusContract serviceConnect()
 	{
@@ -121,51 +104,5 @@ public class Common {
         }
         
         return builder.toString();
-	}
-	
-	public static void createSmartCamerasTable()
-	{
-		try
-		{
-		    // Retrieve storage account from connection-string.
-		    CloudStorageAccount storageAccount =
-		        CloudStorageAccount.parse(SSCConnectionString);
-
-		    // Create the table client.
-		    CloudTableClient tableClient = storageAccount.createCloudTableClient();
-
-		    // Create the table if it doesn't exist.
-		    String tableName = "SpeedCameras";
-		    CloudTable cloudTable = tableClient.getTableReference(tableName);
-		    cloudTable.createIfNotExists();
-		}
-		catch (Exception e)
-		{
-		    // Output the stack trace.
-		    e.printStackTrace();
-		}
-	}
-	
-	public static void createVehiclesTable()
-	{
-		try
-		{
-		    // Retrieve storage account from connection-string.
-		    CloudStorageAccount storageAccount =
-		        CloudStorageAccount.parse(SSCConnectionString);
-
-		    // Create the table client.
-		    CloudTableClient tableClient = storageAccount.createCloudTableClient();
-
-		    // Create the table if it doesn't exist.
-		    String tableName = "Vehicles";
-		    CloudTable cloudTable = tableClient.getTableReference(tableName);
-		    cloudTable.createIfNotExists();
-		}
-		catch (Exception e)
-		{
-		    // Output the stack trace.
-		    e.printStackTrace();
-		}
 	}
 }

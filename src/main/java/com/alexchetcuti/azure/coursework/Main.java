@@ -1,11 +1,12 @@
 package com.alexchetcuti.azure.coursework;
+
 import java.util.Date;
 import java.util.Random;
 
 public class Main {
 
 	public static void main(String[] args){
-		/*if (args.length > 0) {
+		if (args.length > 0) {
 			Camera currentCamera = new Camera();
 			currentCamera.setUniqueID(Integer.parseInt(args[0]));
 			currentCamera.setStreetName(args[1]);
@@ -16,9 +17,8 @@ public class Main {
 			
 			System.out.println(currentCamera.toString());
 			
-			//Common.startCamera(currentCamera.toString());
-			//System.out.println("Camera sent message to Topic successfully!");
-			System.out.println("Camera not sending message to Topic.");
+			Common.startCamera(currentCamera.toString());
+			System.out.println("Camera started successfully!");
 			
 			int trafficRate = Integer.parseInt(args[4]);
 			int ratePerSecond = 60000/trafficRate;
@@ -42,9 +42,6 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		}*/
-		
-		Common.createSmartCamerasTable();
-		Common.createVehiclesTable();
+		}
 	}
 }
