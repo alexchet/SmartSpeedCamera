@@ -1,6 +1,8 @@
 package com.alexchetcuti.azure.coursework;
 
-public class Vehicle {
+import java.io.Serializable;
+
+public class Vehicle implements Serializable {
 	
 	public Vehicle() {
 		

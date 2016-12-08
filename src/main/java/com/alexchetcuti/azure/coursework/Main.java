@@ -9,7 +9,7 @@ public class Main {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args){		
 		if (args.length > 0) {
 			Camera currentCamera = new Camera();
 			currentCamera.setUniqueID(Integer.parseInt(args[0]));

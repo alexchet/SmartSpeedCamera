@@ -1,6 +1,8 @@
 package com.alexchetcuti.azure.coursework;
 
-public class Camera {
+import java.io.Serializable;
+
+public class Camera implements Serializable {
 
 	public Camera() {
 		
