@@ -28,14 +28,19 @@ public class Common {
 		return service;
 	}
 	
-	public static void startCamera(String cameraInfo)
+	public static void startCamera(Camera camera)
 	{
 		ServiceBusContract service = serviceConnect();
 		
 		//Send Messages to a topic
 		// Create message, passing a string message for the body
-		BrokeredMessage message = new BrokeredMessage(cameraInfo);
+		BrokeredMessage message = new BrokeredMessage(camera.toString());
 		message.setProperty("MessageType", "CAMERA");
+		message.setProperty("uniqueID", camera.getUniqueID());
+		message.setProperty("streetName", camera.getStreetName());
+		message.setProperty("town", camera.getTown());
+		message.setProperty("speedLimit", camera.getSpeedLimit());
+		message.setProperty("startTime", camera.getStartTime());
 			
 		// Send message to the topic
 		try {
@@ -55,6 +60,8 @@ public class Common {
 		BrokeredMessage message = new BrokeredMessage(vehicle.toString());
 		// Set some additional custom app-specific property
 		message.setProperty("MessageType", "VEHICLE");
+		message.setProperty("vehicleType", vehicle.getVehicleType());
+		message.setProperty("regPlate", vehicle.getRegPlate());
 		message.setProperty("velocity", vehicle.getVelocity());
 		message.setProperty("cameraUniqueID", vehicle.getCameraUniqueID());
 			

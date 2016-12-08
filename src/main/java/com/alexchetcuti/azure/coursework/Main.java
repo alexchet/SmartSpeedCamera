@@ -21,7 +21,7 @@ public class Main {
 			
 			System.out.println(currentCamera.toString());
 			
-			Common.startCamera(currentCamera.toString());
+			Common.startCamera(currentCamera);
 			System.out.println("Camera started successfully!");
 			
 			int trafficRate = Integer.parseInt(args[4]);
