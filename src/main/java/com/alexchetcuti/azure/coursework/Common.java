@@ -1,4 +1,6 @@
 package com.alexchetcuti.azure.coursework;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.microsoft.windowsazure.Configuration;
@@ -28,11 +30,11 @@ public class Common {
 		return service;
 	}
 	
-	public static void startCamera(Camera camera)
+	public static void startCamera(Camera camera, OfflineModule offlineModule)
 	{
+		boolean tryOffline = false;
 		ServiceBusContract service = serviceConnect();
 		
-		//Send Messages to a topic
 		// Create message, passing a string message for the body
 		BrokeredMessage message = new BrokeredMessage(camera.toString());
 		message.setProperty("MessageType", "CAMERA");
@@ -42,20 +44,28 @@ public class Common {
 		message.setProperty("speedLimit", camera.getSpeedLimit());
 		message.setProperty("startTime", camera.getStartTime());
 			
-		// Send message to the topic
 		try {
 			service.sendTopicMessage("MainTopic", message);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			offlineModule.addOfflineCamera(camera);
 		}
+		
+		//Means we have Internet here so we try again
+		if (tryOffline && offlineModule.countOfflineCameras() > 0) {
+			List<Camera> offlineCameraList = offlineModule.getOfflineCameraList();
+			for (Camera offlineCamera : offlineCameraList) {
+				startCamera(offlineCamera, offlineModule);
+			}
+		}
+		
+		offlineModule.setOfflineCameraList(new ArrayList<Camera>());;
 	}
 	
-	public static void carSighting(Vehicle vehicle)
+	public static void carSighting(Vehicle vehicle, OfflineModule offlineModule)
 	{
+		boolean tryOffline = false;
 		ServiceBusContract service = serviceConnect();
 		
-		//Send Messages to a topic
 		// Create message, passing a string message for the body
 		BrokeredMessage message = new BrokeredMessage(vehicle.toString());
 		// Set some additional custom app-specific property
@@ -65,12 +75,21 @@ public class Common {
 		message.setProperty("velocity", vehicle.getVelocity());
 		message.setProperty("cameraUniqueID", vehicle.getCameraUniqueID());
 			
-		// Send message to the topic
 		try {
 			service.sendTopicMessage("MainTopic", message);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			tryOffline = true;
+		} catch (Exception e) {
+			offlineModule.addOfflineVehicle(vehicle);
+		}
+		
+		//Means we have Internet here so we try again
+		if (tryOffline && offlineModule.countOfflineVehicles() > 0) {
+			List<Vehicle> offlineVehicleList = offlineModule.getOfflineVehicleList();
+			for (Vehicle offlineVehicle : offlineVehicleList) {
+				carSighting(offlineVehicle, offlineModule);
+			}
+			
+			offlineModule.setOfflineVehicleList(new ArrayList<Vehicle>());
 		}
 	}
 	

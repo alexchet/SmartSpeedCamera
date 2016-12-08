@@ -9,7 +9,9 @@ public class Main {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args){		
+	public static void main(String[] args) {
+		OfflineModule offlineModule = new OfflineModule();
+		
 		if (args.length > 0) {
 			Camera currentCamera = new Camera();
 			currentCamera.setUniqueID(Integer.parseInt(args[0]));
@@ -21,7 +23,7 @@ public class Main {
 			
 			System.out.println(currentCamera.toString());
 			
-			Common.startCamera(currentCamera);
+			Common.startCamera(currentCamera, offlineModule);
 			System.out.println("Camera started successfully!");
 			
 			int trafficRate = Integer.parseInt(args[4]);
@@ -36,7 +38,7 @@ public class Main {
 				int current_velocity = rand.nextInt(max_velocity - min_velocity) + min_velocity;
 				
 				Vehicle v = new Vehicle(VehicleType.VALUES.get(rand.nextInt(VehicleType.SIZE)), Common.genRegPlate(), current_velocity, currentCamera.getUniqueID());
-				Common.carSighting(v);
+				Common.carSighting(v, offlineModule);
 				System.out.println(v.toString());
 				
 	            try {
