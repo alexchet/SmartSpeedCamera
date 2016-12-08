@@ -35,6 +35,7 @@ public class Common {
 		//Send Messages to a topic
 		// Create message, passing a string message for the body
 		BrokeredMessage message = new BrokeredMessage(cameraInfo);
+		message.setProperty("MessageType", "CAMERA");
 			
 		// Send message to the topic
 		try {
@@ -53,12 +54,13 @@ public class Common {
 		// Create message, passing a string message for the body
 		BrokeredMessage message = new BrokeredMessage(vehicle.toString());
 		// Set some additional custom app-specific property
+		message.setProperty("MessageType", "VEHICLE");
 		message.setProperty("velocity", vehicle.getVelocity());
 		message.setProperty("cameraUniqueID", vehicle.getCameraUniqueID());
 			
 		// Send message to the topic
 		try {
-			service.sendTopicMessage("vehicles", message);
+			service.sendTopicMessage("MainTopic", message);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +118,7 @@ public class Common {
 		try {
 			CreateSubscriptionResult result = service.createSubscription("MainTopic", subInfo);
 			RuleInfo ruleInfo = new RuleInfo("ruleVehicles");
-			ruleInfo = ruleInfo.withSqlExpressionFilter("MessageType = 'Vehicle'");
+			ruleInfo = ruleInfo.withSqlExpressionFilter("MessageType = 'VEHICLE'");
 			CreateRuleResult ruleResult = service.createRule("MainTopic", "Vehicles", ruleInfo);
 			// Delete the default rule, otherwise the new rule won't be invoked.
 			service.deleteRule("MainTopic", "Vehicles", "$Default");
