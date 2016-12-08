@@ -7,6 +7,10 @@ import com.microsoft.windowsazure.services.servicebus.ServiceBusConfiguration;
 import com.microsoft.windowsazure.services.servicebus.ServiceBusContract;
 import com.microsoft.windowsazure.services.servicebus.ServiceBusService;
 import com.microsoft.windowsazure.services.servicebus.models.BrokeredMessage;
+import com.microsoft.windowsazure.services.servicebus.models.CreateRuleResult;
+import com.microsoft.windowsazure.services.servicebus.models.CreateSubscriptionResult;
+import com.microsoft.windowsazure.services.servicebus.models.RuleInfo;
+import com.microsoft.windowsazure.services.servicebus.models.SubscriptionInfo;
 
 public class Common {
 	
@@ -24,26 +28,6 @@ public class Common {
 		return service;
 	}
 	
-	public static void sendMessages()
-	{
-		ServiceBusContract service = serviceConnect();
-		
-		//Send Messages to a topic
-		for (int i=0; i<5; i++)  {
-			// Create message, passing a string message for the body
-			BrokeredMessage message = new BrokeredMessage("Test message " + i);
-			// Set some additional custom app-specific property
-			message.setProperty("MessageNumber", i);
-			// Send message to the topic
-			try {
-				service.sendTopicMessage("TestTopic", message);
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	public static void startCamera(String cameraInfo)
 	{
 		ServiceBusContract service = serviceConnect();
@@ -54,7 +38,7 @@ public class Common {
 			
 		// Send message to the topic
 		try {
-			service.sendTopicMessage("cameras", message);
+			service.sendTopicMessage("MainTopic", message);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,5 +88,41 @@ public class Common {
         }
         
         return builder.toString();
+	}
+
+	public static void createCamerasSubscription()
+	{ 
+		ServiceBusContract service = serviceConnect();
+		
+		SubscriptionInfo subInfo = new SubscriptionInfo("SpeedCameras");
+		try {
+			CreateSubscriptionResult result = service.createSubscription("MainTopic", subInfo);
+			RuleInfo ruleInfo = new RuleInfo("ruleCamera");
+			ruleInfo = ruleInfo.withSqlExpressionFilter("MessageType = 'CAMERA'");
+			CreateRuleResult ruleResult = service.createRule("MainTopic", "SpeedCameras", ruleInfo);
+			// Delete the default rule, otherwise the new rule won't be invoked.
+			service.deleteRule("MainTopic", "SpeedCameras", "$Default");
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void createVehiclesSubscription()
+	{ 
+		ServiceBusContract service = serviceConnect();
+		
+		SubscriptionInfo subInfo = new SubscriptionInfo("Vehicles");
+		try {
+			CreateSubscriptionResult result = service.createSubscription("MainTopic", subInfo);
+			RuleInfo ruleInfo = new RuleInfo("ruleVehicles");
+			ruleInfo = ruleInfo.withSqlExpressionFilter("MessageType = 'Vehicle'");
+			CreateRuleResult ruleResult = service.createRule("MainTopic", "Vehicles", ruleInfo);
+			// Delete the default rule, otherwise the new rule won't be invoked.
+			service.deleteRule("MainTopic", "Vehicles", "$Default");
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
