@@ -32,13 +32,13 @@ public class Main {
 			Random rand = new Random();
 			
 			while(true) {
-				int min_velocity = currentCamera.getSpeedLimit() / 2;
-				int max_velocity = currentCamera.getSpeedLimit() * 2;
+				int min_velocity = currentCamera.getSpeedLimit() - (currentCamera.getSpeedLimit() / 3);
+				int max_velocity = currentCamera.getSpeedLimit() + (currentCamera.getSpeedLimit() / 5);
 				
 				int current_velocity = rand.nextInt(max_velocity - min_velocity) + min_velocity;
 				
 				Vehicle v = new Vehicle(VehicleType.VALUES.get(rand.nextInt(VehicleType.SIZE)), Common.genRegPlate(), current_velocity, currentCamera.getUniqueID());
-				Common.carSighting(v, offlineModule);
+				Common.carSighting(v, currentCamera.getSpeedLimit(), offlineModule);
 				System.out.println(v.toString());
 				
 	            try {

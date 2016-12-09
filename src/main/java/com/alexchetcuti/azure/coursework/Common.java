@@ -37,7 +37,6 @@ public class Common {
 		
 		// Create message, passing a string message for the body
 		BrokeredMessage message = new BrokeredMessage(camera.toString());
-		message.setProperty("MessageType", "CAMERA");
 		message.setProperty("uniqueID", camera.getUniqueID());
 		message.setProperty("streetName", camera.getStreetName());
 		message.setProperty("town", camera.getTown());
@@ -61,7 +60,7 @@ public class Common {
 		offlineModule.setOfflineCameraList(new ArrayList<Camera>());;
 	}
 	
-	public static void carSighting(Vehicle vehicle, OfflineModule offlineModule)
+	public static void carSighting(Vehicle vehicle, int speedLimit, OfflineModule offlineModule)
 	{
 		boolean tryOffline = false;
 		ServiceBusContract service = serviceConnect();
@@ -69,10 +68,10 @@ public class Common {
 		// Create message, passing a string message for the body
 		BrokeredMessage message = new BrokeredMessage(vehicle.toString());
 		// Set some additional custom app-specific property
-		message.setProperty("MessageType", "VEHICLE");
 		message.setProperty("vehicleType", vehicle.getVehicleType());
 		message.setProperty("regPlate", vehicle.getRegPlate());
 		message.setProperty("velocity", vehicle.getVelocity());
+		message.setProperty("speedLimit", speedLimit);
 		message.setProperty("cameraUniqueID", vehicle.getCameraUniqueID());
 			
 		try {
@@ -86,7 +85,7 @@ public class Common {
 		if (tryOffline && offlineModule.countOfflineVehicles() > 0) {
 			List<Vehicle> offlineVehicleList = offlineModule.getOfflineVehicleList();
 			for (Vehicle offlineVehicle : offlineVehicleList) {
-				carSighting(offlineVehicle, offlineModule);
+				carSighting(offlineVehicle, speedLimit, offlineModule);
 			}
 			
 			offlineModule.setOfflineVehicleList(new ArrayList<Vehicle>());
@@ -126,7 +125,7 @@ public class Common {
 		try {
 			CreateSubscriptionResult result = service.createSubscription("MainTopic", subInfo);
 			RuleInfo ruleInfo = new RuleInfo("ruleCamera");
-			ruleInfo = ruleInfo.withSqlExpressionFilter("MessageType = 'CAMERA'");
+			ruleInfo = ruleInfo.withSqlExpressionFilter("uniqueID IS NOT NULL");
 			CreateRuleResult ruleResult = service.createRule("MainTopic", "SpeedCameras", ruleInfo);
 			// Delete the default rule, otherwise the new rule won't be invoked.
 			service.deleteRule("MainTopic", "SpeedCameras", "$Default");
@@ -143,11 +142,33 @@ public class Common {
 		SubscriptionInfo subInfo = new SubscriptionInfo("Vehicles");
 		try {
 			CreateSubscriptionResult result = service.createSubscription("MainTopic", subInfo);
+			
 			RuleInfo ruleInfo = new RuleInfo("ruleVehicles");
-			ruleInfo = ruleInfo.withSqlExpressionFilter("MessageType = 'VEHICLE'");
+			ruleInfo = ruleInfo.withSqlExpressionFilter("regPlate IS NOT NULL");
 			CreateRuleResult ruleResult = service.createRule("MainTopic", "Vehicles", ruleInfo);
+			
 			// Delete the default rule, otherwise the new rule won't be invoked.
 			service.deleteRule("MainTopic", "Vehicles", "$Default");
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void createVehiclesSpeedingSubscription()
+	{ 
+		ServiceBusContract service = serviceConnect();
+		
+		SubscriptionInfo subInfo = new SubscriptionInfo("VehiclesSpeeding");
+		try {
+			CreateSubscriptionResult result = service.createSubscription("MainTopic", subInfo);
+			
+			RuleInfo ruleInfo1 = new RuleInfo("ruleSpeeding");
+			ruleInfo1 = ruleInfo1.withSqlExpressionFilter("velocity > speedLimit");
+			CreateRuleResult ruleResult1 = service.createRule("MainTopic", "VehiclesSpeeding", ruleInfo1);
+			
+			// Delete the default rule, otherwise the new rule won't be invoked.
+			service.deleteRule("MainTopic", "VehiclesSpeeding", "$Default");
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
