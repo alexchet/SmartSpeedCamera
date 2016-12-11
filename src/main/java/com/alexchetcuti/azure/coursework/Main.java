@@ -1,6 +1,9 @@
 package com.alexchetcuti.azure.coursework;
 
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
@@ -47,8 +50,30 @@ public class Main {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+	            
+	    		//Means we have Internet here so we try again
+	    		if (Common.checkInternet()) {
+	    			if(offlineModule.countOfflineCameras() > 0) {
+		    			List<Camera> offlineCameraList = offlineModule.getOfflineCameraList();
+		    			for (Camera offlineCamera : offlineCameraList) {
+		    				Common.startCamera(offlineCamera, offlineModule);
+		    				System.out.println("From offline store :" + offlineCamera.toString());
+		    			}
+	
+		    			offlineModule.setOfflineCameraList(new ArrayList<Camera>());
+		    		}
+
+		    		if (offlineModule.countOfflineVehicles() > 0) {
+		    			List<Vehicle> offlineVehicleList = offlineModule.getOfflineVehicleList();
+		    			for (Vehicle offlineVehicle : offlineVehicleList) {
+		    				Common.carSighting(offlineVehicle, currentCamera.getSpeedLimit(), offlineModule);
+		    				System.out.println("From offline store :" + offlineVehicle.toString());
+		    			}
+		    			
+		    			offlineModule.setOfflineVehicleList(new ArrayList<Vehicle>());
+		    		}
+	    		}
 			}
-		
 		}
 	}
 }
