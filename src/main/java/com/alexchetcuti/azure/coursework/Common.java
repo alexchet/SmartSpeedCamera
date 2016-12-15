@@ -1,11 +1,17 @@
 package com.alexchetcuti.azure.coursework;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.microsoft.azure.storage.CloudStorageAccount;
+import com.microsoft.azure.storage.queue.CloudQueue;
+import com.microsoft.azure.storage.queue.CloudQueueClient;
+import com.microsoft.azure.storage.queue.CloudQueueMessage;
 import com.microsoft.windowsazure.Configuration;
 import com.microsoft.windowsazure.exception.ServiceException;
 import com.microsoft.windowsazure.services.servicebus.ServiceBusConfiguration;
@@ -19,6 +25,30 @@ import com.microsoft.windowsazure.services.servicebus.models.SubscriptionInfo;
 import com.sun.jersey.api.client.ClientHandlerException;
 
 public class Common {
+
+	private static final String SSCStorageConnectionString = 
+			"DefaultEndpointsProtocol=http;" +
+			"AccountName=sscdatastorage;" +
+			"AccountKey=9OcI4KkZf6FyD/CSOLBQIzbjxiSIcjKVy0QtO6U1z0Ydb/juV4k49MTLWoRMWl124/GyfOwFMSDGN3htKTnq3Q==";
+
+	public static CloudStorageAccount storageConnect()
+	{
+	    try {
+		    // Retrieve storage account from connection-string.
+			CloudStorageAccount storageAccount =
+			    CloudStorageAccount.parse(SSCStorageConnectionString);
+			
+			return storageAccount;
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    return null;
+	}
 	
 	public static ServiceBusContract serviceConnect()
 	{
@@ -39,7 +69,6 @@ public class Common {
 		if (checkInternet()) {
 			try{
 				ServiceBusContract service = serviceConnect();
-				System.out.println(service);
 				// Create message, passing a string message for the body
 				BrokeredMessage message = new BrokeredMessage(camera.toString());
 				message.setProperty("uniqueID", camera.getUniqueID());
@@ -176,5 +205,21 @@ public class Common {
 		}
 		
 		return isConnected;
+	}
+	
+	public static void addMessageToQueue(String regPlate)
+	{
+		try
+		{
+			ServiceBusContract service = serviceConnect();
+		    BrokeredMessage message = new BrokeredMessage(regPlate);
+		    service.sendQueueMessage("vehiclespeedingqueue", message);
+		}
+		catch (ServiceException e)
+		{
+		    System.out.print("ServiceException encountered: ");
+		    System.out.println(e.getMessage());
+		    System.exit(-1);
+		}
 	}
 }

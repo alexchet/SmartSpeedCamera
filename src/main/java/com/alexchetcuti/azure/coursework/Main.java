@@ -12,7 +12,7 @@ public class Main {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		OfflineModule offlineModule = new OfflineModule();
 		
 		if (args.length > 0) {
@@ -42,6 +42,12 @@ public class Main {
 				
 				Vehicle v = new Vehicle(VehicleType.VALUES.get(rand.nextInt(VehicleType.SIZE)), Common.genRegPlate(), current_velocity, currentCamera.getUniqueID());
 				Common.carSighting(v, currentCamera.getSpeedLimit(), offlineModule);
+				
+				//Add to queue if speeding
+				if (current_velocity > currentCamera.getSpeedLimit()) {
+					Common.addMessageToQueue(v.getRegPlate());
+				}
+				
 				System.out.println(v.toString());
 				
 	            try {
